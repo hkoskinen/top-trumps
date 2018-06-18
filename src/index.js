@@ -9,9 +9,12 @@ class App {
   constructor(root) {
     this.root = root;
     this.state = {
-      counter: 0
+      deck: [],
+      playerDeck: [],
+      computerDeck: []
     };
     this.setState();
+    this.componentDidMount();
   }
   setState(nextState) {
     this.state = { ...this.state,
@@ -19,22 +22,16 @@ class App {
     };
     this.root.innerHTML = this.render();
   }
-  increase() {
-    this.setState({
-      counter: this.state.counter + 1
-    });
-  }
-  decrease() {
-    this.setState({
-      counter: this.state.counter - 1
-    });
+  componentDidMount() {
+    fetch('/api/top-packages.json')
+      .then(response => response.json())
+      .then(data => {
+        deck: data
+      });
   }
   render() {
     return `
-      ${h1('Counter')}
-      <div>${this.state.counter}</div>
-      ${button('app.decrease()', '-')}
-      ${button('app.increase()', '+')}
+      ${h1('npm Package Expert')}
     `;
   }
 }
