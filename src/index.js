@@ -5,6 +5,39 @@ const button = (onClick, children) =>
 
 const h1 = children => `<h1>${children}</h1>`;
 
+const card = data => {
+  if (!data) return '<div class="card">Card data is missing</div>';
+  const {
+    name,
+    version,
+    releases,
+    dependencies,
+    dependents,
+    downloadsLastMonth,
+    openIssues,
+    openPullRequests,
+    quality,
+    popularity,
+    maintenance
+  } = data;
+
+  return `
+    <div class="card">
+      <h3 class="card__title">${name} - v${version}</h3>
+      <ul class="card__stats">
+        <li>Releases<span>${releases}</span></li>
+        <li>Dependencies<span>${dependencies}</span></li>
+        <li>Dependents<span>${dependents}</span></li>
+        <li>Downloads last month<span>${downloadsLastMonth}</span></li>
+        <li>Open issues<span>${openIssues}</span></li>
+        <li>Open pull requests<span>${openPullRequests}</span></li>
+        <li>Quality<span>${quality}</span></li>
+        <li>Popularity<span>${popularity}</span></li>
+        <li>Maintenance<span>${maintenance}</span></li>
+      </ul>
+    </div>`;
+};
+
 class App {
   constructor(root) {
     this.root = root;
@@ -26,12 +59,17 @@ class App {
     fetch('/api/top-packages.json')
       .then(response => response.json())
       .then(data => {
-        deck: data
+        this.setState({
+          deck: data
+        });
       });
   }
   render() {
     return `
       ${h1('npm Package Expert')}
+      <div class="cards">
+        ${card(this.state.deck[0])}
+      </div>
     `;
   }
 }
