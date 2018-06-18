@@ -24,7 +24,7 @@ const card = data => {
   return `
     <div class="card">
       <div class="card__container">
-        <h3 class="card__title">${name} - v${version}</h3>
+        <h3 class="card__title">${name}<span>v${version}</span></h3>
         <ul class="card__stats">
           <li>Releases<span>${releases}</span></li>
           <li>Dependencies<span>${dependencies}</span></li>
@@ -61,8 +61,9 @@ class App {
     fetch('/api/top-packages.json')
       .then(response => response.json())
       .then(data => {
+        const deck = this.shuffleDeck(data);
         this.setState({
-          deck: data
+          deck
         });
       });
   }
@@ -73,6 +74,16 @@ class App {
         ${card(this.state.deck[0])}
       </div>
     `;
+  }
+  shuffleDeck(array) {
+    const copy = [...array];
+    for (let i = 0; i < copy.length; i++) {
+      const temp = copy[i];
+      const r = Math.floor(Math.random() * copy.length);
+      copy[i] = copy[r];
+      copy[r] = temp;
+    }
+    return copy;
   }
 }
 
