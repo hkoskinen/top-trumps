@@ -63,7 +63,9 @@ class App {
       .then(data => {
         const deck = this.shuffleDeck(data);
         this.setState({
-          deck
+          deck,
+          playerDeck: deck.slice(0, deck.length / 2),
+          computerDeck: deck.slice(deck.length / 2)
         });
       });
   }
@@ -71,7 +73,7 @@ class App {
     return `
       ${h1('npm Package Expert')}
       <div class="cards">
-        ${card(this.state.deck[0])}
+        ${card(this.state.playerDeck[0])}
       </div>
     `;
   }
@@ -84,6 +86,39 @@ class App {
       copy[r] = temp;
     }
     return copy;
+  }
+
+  compareCards(stat) {
+
+    const playerStat = this.state.playerDeck[0][stat];
+    const computerStat = this.state.computerDeck[0][stat];
+
+    if (playerStat === computerStat) {
+      // if stas are equal
+
+    }
+
+    // stat == the stat to compare
+    // compare both decks top cards this.state.computerDeck[0]
+    // and this.state.playerDeck[0].
+
+    // If values are equal:
+    // * show notification
+    // * let the player guess again
+
+    // if values are not equal:
+    // * show both cards
+    // * show which one won
+    // * show continue / play again buttons
+
+    // if player clicks continue button
+    // * both cards go to the bottom of the winners deck
+
+    // if both players have cards in their deck
+    // * play again
+
+    // when one of the players cards run out
+    // * game over
   }
 }
 
