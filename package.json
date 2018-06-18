@@ -1,0 +1,24 @@
+{
+  "name": "top-trumps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server",
+  "private": true,
+  "scripts": {
+    "build": "babel src --out-dir lib --source-maps",
+    "dev": "npm run build -- --watch",
+    "start": "babel-node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/node": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-stage-3": "^7.0.0-beta.51",
+    "koa": "^2.5.1",
+    "koa-static": "^4.0.3"
+  }
+}
