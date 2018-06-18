@@ -23,18 +23,20 @@ const card = data => {
 
   return `
     <div class="card">
-      <h3 class="card__title">${name} - v${version}</h3>
-      <ul class="card__stats">
-        <li>Releases<span>${releases}</span></li>
-        <li>Dependencies<span>${dependencies}</span></li>
-        <li>Dependents<span>${dependents}</span></li>
-        <li>Downloads last month<span>${downloadsLastMonth}</span></li>
-        <li>Open issues<span>${openIssues}</span></li>
-        <li>Open pull requests<span>${openPullRequests}</span></li>
-        <li>Quality<span>${quality}</span></li>
-        <li>Popularity<span>${popularity}</span></li>
-        <li>Maintenance<span>${maintenance}</span></li>
-      </ul>
+      <div class="card__container">
+        <h3 class="card__title">${name} - v${version}</h3>
+        <ul class="card__stats">
+          <li>Releases<span>${releases}</span></li>
+          <li>Dependencies<span>${dependencies}</span></li>
+          <li>Dependents<span>${dependents}</span></li>
+          <li>Downloads last month<span>${downloadsLastMonth}</span></li>
+          <li>Open issues<span>${openIssues}</span></li>
+          <li>Open pull requests<span>${openPullRequests}</span></li>
+          <li>Quality<span>${quality}</span></li>
+          <li>Popularity<span>${popularity}</span></li>
+          <li>Maintenance<span>${maintenance}</span></li>
+        </ul>
+      </div>
     </div>`;
 };
 
