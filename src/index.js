@@ -1,3 +1,6 @@
+import card from './card';
+import './styles.css';
+
 const button = (onClick, children) =>
   `<button onClick="${onClick.replace(/"/g, '&quot;')}" class="button">
     ${children}
@@ -6,41 +9,6 @@ const button = (onClick, children) =>
 const h1 = children => `<h1>${children}</h1>`;
 
 const p = children => `<p>${children}</p>`;
-
-const card = data => {
-  if (!data) return '<div class="card">Card data is missing</div>';
-  const {
-    name,
-    version,
-    releases,
-    dependencies,
-    dependents,
-    downloadsLastMonth,
-    openIssues,
-    openPullRequests,
-    quality,
-    popularity,
-    maintenance
-  } = data;
-
-  return `
-    <div class="card">
-      <div class="card__container">
-        <h3 class="card__title">${name}<span>v${version}</span></h3>
-        <ul class="card__stats">
-          <li>Releases<span>${releases}</span></li>
-          <li>Dependencies<span>${dependencies}</span></li>
-          <li>Dependents<span>${dependents}</span></li>
-          <li>Downloads last month<span>${downloadsLastMonth}</span></li>
-          <li>Open issues<span>${openIssues}</span></li>
-          <li>Open pull requests<span>${openPullRequests}</span></li>
-          <li>Quality<span>${quality}</span></li>
-          <li>Popularity<span>${popularity}</span></li>
-          <li>Maintenance<span>${maintenance}</span></li>
-        </ul>
-      </div>
-    </div>`;
-};
 
 class App {
   constructor(root) {
@@ -139,4 +107,4 @@ class App {
   }
 }
 
-const app = new App(document.getElementById('root'));
+global.app = new App(document.getElementById('root'));
