@@ -27,10 +27,12 @@ body {
   text-align: center;
   font-family: 'Lobster';
   font-size: 4rem;
-  transform: rotate(-4deg);
   color: #effbff;
   margin: 1rem 0 3rem 0;
   text-shadow: 3px 3px 20px #6ed8fb;
+  animation-duration: 8s;
+  animation-name: rotateTitle;
+  animation-iteration-count: infinite;
 }
 
 .buttons {
@@ -62,6 +64,11 @@ body {
   width: 280px;
   border: 1px solid #333;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease-out;
+}
+
+.card:hover {
+  transform: scale(1.01);
 }
 
 .card__container {
@@ -108,4 +115,18 @@ body {
 
 .card__stats li span {
   font-weight: bold;
+}
+
+/* Animations */
+
+@keyframes rotateTitle {
+  0% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(-4deg);
+  }
 }

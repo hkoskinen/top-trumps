@@ -47,7 +47,7 @@ class App {
           ${button('app.continue()', 'Continue')}
           ${button('app.playAgain()', 'Play Again')}
         </div>
-        <div class="status">
+        <div class="status" onClick="app.playAgain()">
           ${p('Guess a property from your card and see if it wins computer\'s!')}
         </div>
       </div>
