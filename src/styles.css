@@ -14,6 +14,45 @@ body {
   color: #333;
   font-family: sans-serif;
   font-weight: 100;
+  background: linear-gradient(#fff, #95e5ff);
+}
+
+.game {
+  padding: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.game__title {
+  text-align: center;
+  font-family: 'Lobster';
+  font-size: 4rem;
+  transform: rotate(-4deg);
+  color: #effbff;
+  margin: 1rem 0 3rem 0;
+  text-shadow: 3px 3px 20px #6ed8fb;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.button {
+  border: 1px solid #fff;
+  flex-grow: 1;
+  outline: none;
+  background: #6cdbff;
+  padding: 1rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-out;
+}
+
+.button:hover {
+  background: #089bcb;
+  cursor: pointer;
 }
 
 .card {

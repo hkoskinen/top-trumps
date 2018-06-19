@@ -2,7 +2,7 @@ import card from './card';
 import button from './button';
 import './styles.css';
 
-const h1 = children => `<h1>${children}</h1>`;
+const h1 = children => `<h1 class="game__title">${children}</h1>`;
 const p = children => `<p>${children}</p>`;
 
 class App {
@@ -27,6 +27,7 @@ class App {
       .then(response => response.json())
       .then(data => {
         const deck = this.shuffleDeck(data);
+        console.log('Shuffled deck', deck);
         this.setState({
           deck,
           playerDeck: deck.slice(0, deck.length / 2),
@@ -35,17 +36,20 @@ class App {
       });
   }
   render() {
+    if (!this.state.deck) return 'Loading...';
     return `
-      ${h1('npm Package Expert')}
-      <div class="cards">
-        ${card(this.state.playerDeck[0])}
-      </div>
-      <div class="buttons">
-        ${button('app.continue()', 'Continue')}
-        ${button('app.playAgain()', 'Play Again')}
-      </div>
-      <div class="status">
-        ${p('Guess a property from your card and see if it wins computer\'s!')}
+      <div class="game">
+        ${h1('npm Package Expert')}
+        <div class="cards">
+          ${card(this.state.playerDeck[0])}
+        </div>
+        <div class="buttons">
+          ${button('app.continue()', 'Continue')}
+          ${button('app.playAgain()', 'Play Again')}
+        </div>
+        <div class="status">
+          ${p('Guess a property from your card and see if it wins computer\'s!')}
+        </div>
       </div>
     `;
   }
