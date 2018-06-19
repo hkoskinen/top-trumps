@@ -1,10 +1,11 @@
-import card from './card';
-import button from './button';
-import './styles.css';
-
 import {
   shuffle
 } from 'lodash';
+
+import card from './card';
+import button from './button';
+
+import './styles.css';
 
 const h1 = children => `<h1 class="game__title">${children}</h1>`;
 const p = children => `<p>${children}</p>`;
@@ -79,6 +80,7 @@ class App {
   }
 
   selectStat(selectedStat) {
+    if (selectedStat === 'name' || selectedStat === 'version') return;
     this.setState({
       selectedStat
     });
@@ -89,10 +91,27 @@ class App {
     const playerCard = this.state.playerDeck[0];
     const computerCard = this.state.computerDeck[0];
 
-    console.log(stat, playerCard[stat], computerCard[stat]);
+    console.log(`Selected stat: ${stat} Player: ${playerCard[stat]} Computer: ${computerCard[stat]}`);
 
     if (playerCard[stat] === computerCard[stat]) {
       console.log('Found equal stats!');
+    }
+
+    switch (stat) {
+      case 'dependents':
+      case 'downloadsLastMonth':
+      case 'maintenance':
+      case 'popularity':
+      case 'quality':
+      case 'releases':
+        console.log('GREATER value is better!');
+        break;
+
+      case 'dependencies':
+      case 'openIssues':
+      case 'openPullRequests':
+        console.log('LOWER value is better!');
+        break;
     }
   }
 }
