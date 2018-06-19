@@ -1,9 +1,11 @@
 const button = (onClick, children) =>
-  `<button onClick="${onClick.replace(/"/g, '&quot;')}">
+  `<button onClick="${onClick.replace(/"/g, '&quot;')}" class="button">
     ${children}
   </button>`;
 
 const h1 = children => `<h1>${children}</h1>`;
+
+const p = children => `<p>${children}</p>`;
 
 const card = data => {
   if (!data) return '<div class="card">Card data is missing</div>';
@@ -75,6 +77,13 @@ class App {
       <div class="cards">
         ${card(this.state.playerDeck[0])}
       </div>
+      <div class="buttons">
+        ${button('app.continue()', 'Continue')}
+        ${button('app.playAgain()', 'Play Again')}
+      </div>
+      <div class="status">
+        ${p('Guess a property from your card and see if it wins computer\'s!')}
+      </div>
     `;
   }
   shuffleDeck(array) {
@@ -86,6 +95,14 @@ class App {
       copy[r] = temp;
     }
     return copy;
+  }
+
+  continue () {
+    console.log('Continue playing');
+  }
+
+  playAgain() {
+    console.log('Play again');
   }
 
   compareCards(stat) {
