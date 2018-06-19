@@ -1,13 +1,8 @@
 import card from './card';
+import button from './button';
 import './styles.css';
 
-const button = (onClick, children) =>
-  `<button onClick="${onClick.replace(/"/g, '&quot;')}" class="button">
-    ${children}
-  </button>`;
-
 const h1 = children => `<h1>${children}</h1>`;
-
 const p = children => `<p>${children}</p>`;
 
 class App {
