@@ -2,6 +2,10 @@ import card from './card';
 import button from './button';
 import './styles.css';
 
+import {
+  shuffle
+} from 'lodash';
+
 const h1 = children => `<h1 class="game__title">${children}</h1>`;
 const p = children => `<p>${children}</p>`;
 
@@ -26,7 +30,7 @@ class App {
     fetch('/api/top-packages.json')
       .then(response => response.json())
       .then(data => {
-        const deck = this.shuffleDeck(data);
+        const deck = shuffle(data);
         console.log('Shuffled deck', deck);
         this.setState({
           deck,
@@ -52,16 +56,6 @@ class App {
         </div>
       </div>
     `;
-  }
-  shuffleDeck(array) {
-    const copy = [...array];
-    for (let i = 0; i < copy.length; i++) {
-      const temp = copy[i];
-      const r = Math.floor(Math.random() * copy.length);
-      copy[i] = copy[r];
-      copy[r] = temp;
-    }
-    return copy;
   }
 
   continue () {
