@@ -9,13 +9,23 @@ import {
 const h1 = children => `<h1 class="game__title">${children}</h1>`;
 const p = children => `<p>${children}</p>`;
 
+const messages = {
+  'start': 'Choose property from your card that you think is better',
+  'equalStat': '',
+  'playerHasBetterStat': '',
+  'computerHasBetterStat': '',
+  'playerWins': '',
+  'computerWins': '',
+};
+
 class App {
   constructor(root) {
     this.root = root;
     this.state = {
       deck: [],
       playerDeck: [],
-      computerDeck: []
+      computerDeck: [],
+      selectedStat: ''
     };
     this.setState();
     this.componentDidMount();
@@ -66,6 +76,13 @@ class App {
 
   playAgain() {
     console.log('Play again');
+  }
+
+  selectStat(selectedStat) {
+    console.log(selectedStat);
+    this.setState({
+      selectedStat
+    });
   }
 
   compareCards(stat) {

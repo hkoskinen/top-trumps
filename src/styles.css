@@ -122,7 +122,7 @@ body {
 .card__stats li:hover {
   cursor: pointer;
   border-radius: 0.2em;
-  background-color: #6ed8fb;
+  background: rgba(255, 255, 255, .4);
 }
 
 .card__stats li span {
