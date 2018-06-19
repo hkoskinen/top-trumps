@@ -57,6 +57,11 @@ body {
   cursor: pointer;
 }
 
+.cards {
+  display: flex;
+  justify-content: space-around;
+}
+
 .card {
   background-color: #fff;
   border-radius: 0.7rem;
@@ -74,9 +79,16 @@ body {
 .card__container {
   border-radius: 0.7rem;
   border: 5px solid #000;
-  background: linear-gradient(#6cdbff, #089bcb);
   color: #fff;
   padding: 0.5rem;
+}
+
+.card__container--player {
+  background: linear-gradient(#6cdbff, #089bcb);
+}
+
+.card__container--computer {
+  background: linear-gradient(#ff6cc7, #cb08cb);
 }
 
 .card__title {

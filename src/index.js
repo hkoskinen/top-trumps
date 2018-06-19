@@ -46,13 +46,15 @@ class App {
         ${h1('npm Package Expert')}
         <div class="cards">
           ${card(this.state.playerDeck[0])}
+          ${card(this.state.computerDeck[0], false)}
+        </div>
+
+        <div class="status" onClick="app.playAgain()">
+          ${p('Guess a property from your card and see if it wins computer\'s!')}
         </div>
         <div class="buttons">
           ${button('app.continue()', 'Continue')}
           ${button('app.playAgain()', 'Play Again')}
-        </div>
-        <div class="status" onClick="app.playAgain()">
-          ${p('Guess a property from your card and see if it wins computer\'s!')}
         </div>
       </div>
     `;

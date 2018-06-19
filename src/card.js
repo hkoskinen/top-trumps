@@ -1,4 +1,4 @@
-const card = data => {
+const card = (data, isPlayer = true) => {
   if (!data) return '<div class="card">Card data is missing</div>';
   const {
     name,
@@ -16,7 +16,7 @@ const card = data => {
 
   return `
     <div class="card">
-      <div class="card__container">
+      <div class="card__container ${isPlayer ? 'card__container--player' : 'card__container--computer'}">
         <h3 class="card__title">${name}<span>v${version}</span></h3>
         <ul class="card__stats">
           <li>Releases<span>${releases}</span></li>
