@@ -79,43 +79,21 @@ class App {
   }
 
   selectStat(selectedStat) {
-    console.log(selectedStat);
     this.setState({
       selectedStat
     });
+    this.compareCards(selectedStat);
   }
 
   compareCards(stat) {
+    const playerCard = this.state.playerDeck[0];
+    const computerCard = this.state.computerDeck[0];
 
-    const playerStat = this.state.playerDeck[0][stat];
-    const computerStat = this.state.computerDeck[0][stat];
+    console.log(stat, playerCard[stat], computerCard[stat]);
 
-    if (playerStat === computerStat) {
-      // if stas are equal
-
+    if (playerCard[stat] === computerCard[stat]) {
+      console.log('Found equal stats!');
     }
-
-    // stat == the stat to compare
-    // compare both decks top cards this.state.computerDeck[0]
-    // and this.state.playerDeck[0].
-
-    // If values are equal:
-    // * show notification
-    // * let the player guess again
-
-    // if values are not equal:
-    // * show both cards
-    // * show which one won
-    // * show continue / play again buttons
-
-    // if player clicks continue button
-    // * both cards go to the bottom of the winners deck
-
-    // if both players have cards in their deck
-    // * play again
-
-    // when one of the players cards run out
-    // * game over
   }
 }
 
