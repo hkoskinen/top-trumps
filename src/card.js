@@ -1,22 +1,24 @@
-const card = (data, isPlayer = true) => {
-  if (!data) return '<div class="card">Card data is missing</div>';
-  const {
-    name,
-    version
-  } = data;
+const generateMarkupFromData = data => {
+  return Object.entries(data).map(([key, val]) => {
+    if (key === 'name' || key === 'version') return; // don't add name and version again
 
-  const stats = Object.entries(data).map(([key, val]) => {
     const splittedKey = key.split(/(?=[A-Z])/).join(' ').toLowerCase();
     const prettyKey = splittedKey.substring(0, 1).toUpperCase() + splittedKey.substring(1)
     return `
       <li onclick="app.selectStat('${key}')">${prettyKey}<span>${val}</span></li>
     `;
   }).join('');
+};
+
+const card = (data, isPlayer = true) => {
+  if (!data) return '<div class="card">Card data is missing</div>';
+
+  const stats = generateMarkupFromData(data);
 
   return `
     <div class="card">
       <div class="card__container ${isPlayer ? 'card__container--player' : 'card__container--computer'}">
-        <h3 class="card__title">${name}<span>v${version}</span></h3>
+        <h3 class="card__title">${data.name}<span>v${data.version}</span></h3>
         <ul class="card__stats">
           ${stats}
         </ul>
