@@ -68,7 +68,7 @@ class App {
           ${p(`Player cards: ${this.state.playerDeck.length} Computer cards: ${this.state.computerDeck.length}`)}
         </div>
         <div class="buttons">
-          ${button('app.continue()', 'Continue')}
+          ${`${this.state.showComputerCard ? button('app.continue()', 'Continue') : ''}`}
           ${button('app.playAgain()', 'Start new game')}
         </div>
       </div>
@@ -80,11 +80,11 @@ class App {
       showComputerCard: false,
       selectedStat: ''
     });
+    this.updateDecks(true);
   }
 
   playAgain() {
     const shuffledDeck = shuffle(this.state.deck);
-
     this.setState({
       shuffledDeck,
       playerDeck: shuffledDeck.slice(0, shuffledDeck.length / 2),
@@ -106,75 +106,54 @@ class App {
       });
       return;
     }
+    // if not equal
+    const playerWins = this.compareCards(selectedStat);
+
     this.setState({
       showComputerCard: true
     });
-
-    //this.compareCards(selectedStat);
+    console.log(playerWins ? 'Player wins round' : 'Computer wins round');
   }
 
-  playerWinsRound() {
+  updateDecks(playerWins) {
     let newPlayerDeck = [...this.state.playerDeck];
     let newComputerDeck = [...this.state.computerDeck];
-    newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
-    this.setState({
-      playerDeck: newPlayerDeck,
-      computerDeck: newComputerDeck
-    });
-  }
-
-  computerWinsRound() {
-    let newPlayerDeck = [...this.state.playerDeck];
-    let newComputerDeck = [...this.state.computerDeck];
-    newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
-    this.setState({
-      playerDeck: newPlayerDeck,
-      computerDeck: newComputerDeck
-    });
-  }
-
-  compareCards(stat) {
-    const playerStat = this.state.playerDeck[0][stat];
-    const computerStat = this.state.computerDeck[0][stat];
-
-    // TEST EQUALITY
-    if (playerStat === computerStat) {
-      this.setState({
-        currentStatus: statusMessages.equalStat
-      });
-      return;
+    if (playerWins) {
+      newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
+    } else {
+      newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
     }
+    this.setState({
+      playerDeck: newPlayerDeck,
+      computerDeck: newComputerDeck
+    });
+  }
+  compareCards(selectedStat) {
+    const playerStat = this.state.playerDeck[0][selectedStat];
+    const computerStat = this.state.computerDeck[0][selectedStat];
+
+    let playerWins;
 
     // TEST IF STAT IS GREATER OR LOWER
-    switch (stat) {
+    switch (selectedStat) {
       case 'dependents':
       case 'downloadsLastMonth':
       case 'maintenance':
       case 'popularity':
       case 'quality':
       case 'releases':
-        if (playerStat > computerStat) this.playerWinsRound();
-        else this.computerWinsRound();
+        if (playerStat > computerStat) playerWins = true;
+        else playerWins = false;
         break;
 
       case 'dependencies':
       case 'openIssues':
       case 'openPullRequests':
-        if (playerStat < computerStat) this.playerWinsRound();
-        else this.computerWinsRound();
+        if (playerStat < computerStat) playerWins = true;
+        else playerWins = false;
         break;
     }
-
-    // CHECK IF OTHER PLAYER'S DECK IS EMPTY
-    if (this.state.playerDeck.length === 12) {
-      this.setState({
-        currentStatus: statusMessages.playerWins
-      });
-    } else if (this.state.computerDeck.length === 12) {
-      this.setState({
-        currentStatus: statusMessages.computerWins
-      });
-    }
+    return playerWins;
   }
 }
 
