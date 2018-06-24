@@ -24,6 +24,7 @@ class App {
     this.root = root;
     this.state = {
       deck: [],
+      shuffledDeck: [],
       playerDeck: [],
       computerDeck: [],
       selectedStat: ''
@@ -41,12 +42,13 @@ class App {
     fetch('/api/top-packages.json')
       .then(response => response.json())
       .then(data => {
-        const deck = shuffle(data);
-        console.log('Shuffled deck', deck);
+        const deck = data;
+        const shuffledDeck = shuffle(data);
         this.setState({
           deck,
-          playerDeck: deck.slice(0, deck.length / 2),
-          computerDeck: deck.slice(deck.length / 2)
+          shuffledDeck,
+          playerDeck: shuffledDeck.slice(0, shuffledDeck.length / 2),
+          computerDeck: shuffledDeck.slice(shuffledDeck.length / 2)
         });
       });
   }
@@ -88,14 +90,20 @@ class App {
   }
 
   compareCards(stat) {
-    const playerCard = this.state.playerDeck[0];
-    const computerCard = this.state.computerDeck[0];
+    const playerStat = this.state.playerDeck[0][stat];
+    const computerStat = this.state.computerDeck[0][stat];
+    console.log(`Selected stat: ${stat} Player: ${playerStat} Computer: ${computerStat}`);
 
-    console.log(`Selected stat: ${stat} Player: ${playerCard[stat]} Computer: ${computerCard[stat]}`);
-
-    if (playerCard[stat] === computerCard[stat]) {
-      console.log('Found equal stats!');
+    // TEST EQUALITY
+    if (playerStat === computerStat) {
+      console.log('Found equal stats! Guess another stat!');
+      return;
     }
+
+    // TEST IF STAT IS GREATER OR LOWER
+
+    let newPlayerDeck = [...this.state.playerDeck];
+    let newComputerDeck = [...this.state.computerDeck];
 
     switch (stat) {
       case 'dependents':
@@ -104,15 +112,40 @@ class App {
       case 'popularity':
       case 'quality':
       case 'releases':
-        console.log('GREATER value is better!');
+
+        if (playerStat > computerStat) {
+          newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
+        } else {
+          newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
+        }
+        this.setState({
+          playerDeck: newPlayerDeck,
+          computerDeck: newComputerDeck
+        });
         break;
 
       case 'dependencies':
       case 'openIssues':
       case 'openPullRequests':
-        console.log('LOWER value is better!');
+        if (playerStat < computerStat) {
+          newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
+        } else {
+          newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
+        }
+        this.setState({
+          playerDeck: newPlayerDeck,
+          computerDeck: newComputerDeck
+        });
         break;
     }
+
+    // CHECK IF OTHER PLAYER'S DECK IS EMPTY
+    if (this.state.playerDeck.length === 0) {
+      console.log('Player loses');
+    } else if (this.state.computerDeck.length === 0) {
+      console.log('Computer loses');
+    }
+    console.log(this.state.playerDeck, this.state.computerDeck);
   }
 }
 
