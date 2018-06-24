@@ -79,6 +79,13 @@ class App {
 
   playAgain() {
     console.log('Play again');
+    const shuffledDeck = shuffle(this.state.deck);
+
+    this.setState({
+      shuffledDeck,
+      playerDeck: shuffledDeck.slice(0, shuffledDeck.length / 2),
+      computerDeck: shuffledDeck.slice(shuffledDeck.length / 2)
+    });
   }
 
   selectStat(selectedStat) {
@@ -96,12 +103,11 @@ class App {
 
     // TEST EQUALITY
     if (playerStat === computerStat) {
-      console.log('Found equal stats! Guess another stat!');
+      console.log('Found equal stat! Guess another stat!');
       return;
     }
 
     // TEST IF STAT IS GREATER OR LOWER
-
     let newPlayerDeck = [...this.state.playerDeck];
     let newComputerDeck = [...this.state.computerDeck];
 
