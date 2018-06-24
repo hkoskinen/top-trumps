@@ -73,12 +73,9 @@ class App {
     `;
   }
 
-  continue () {
-    console.log('Continue playing');
-  }
+  continue () {}
 
   playAgain() {
-    console.log('Play again');
     const shuffledDeck = shuffle(this.state.deck);
 
     this.setState({
@@ -99,11 +96,9 @@ class App {
   compareCards(stat) {
     const playerStat = this.state.playerDeck[0][stat];
     const computerStat = this.state.computerDeck[0][stat];
-    console.log(`Selected stat: ${stat} Player: ${playerStat} Computer: ${computerStat}`);
 
     // TEST EQUALITY
     if (playerStat === computerStat) {
-      console.log('Found equal stat! Guess another stat!');
       return;
     }
 
@@ -118,7 +113,6 @@ class App {
       case 'popularity':
       case 'quality':
       case 'releases':
-
         if (playerStat > computerStat) {
           newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
         } else {
@@ -147,11 +141,10 @@ class App {
 
     // CHECK IF OTHER PLAYER'S DECK IS EMPTY
     if (this.state.playerDeck.length === 0) {
-      console.log('Player loses');
+
     } else if (this.state.computerDeck.length === 0) {
-      console.log('Computer loses');
+
     }
-    console.log(this.state.playerDeck, this.state.computerDeck);
   }
 }
 
