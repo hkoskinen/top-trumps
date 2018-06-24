@@ -72,10 +72,6 @@ body {
   transition: transform 0.3s ease-out;
 }
 
-.card:hover {
-  transform: scale(1.01);
-}
-
 .card__container {
   border-radius: 0.7rem;
   border: 5px solid #000;
