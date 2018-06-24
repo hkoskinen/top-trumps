@@ -115,6 +115,10 @@ body {
   border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
 }
 
+.card__stats li.selected {
+  background: red;
+}
+
 .card__stats li:hover {
   cursor: pointer;
   border-radius: 0.2em;
