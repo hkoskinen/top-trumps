@@ -27,6 +27,8 @@ class App {
       shuffledDeck: [],
       playerDeck: [],
       computerDeck: [],
+      selectedStat: '',
+      showComputerCard: false,
       currentStatus: statusMessages.start
     };
     this.setState();
@@ -58,8 +60,8 @@ class App {
       <div class="game">
         ${h1('npm Package Expert')}
         <div class="cards">
-          ${card(this.state.playerDeck[0])}
-          ${card(this.state.computerDeck[0], false)}
+          ${card(this.state.playerDeck[0], true, this.state.selectedStat)}
+          ${`${this.state.showComputerCard ? card(this.state.computerDeck[0], false) : ''}`}
         </div>
         <div class="status">
           ${p(this.state.currentStatus)}
@@ -67,13 +69,18 @@ class App {
         </div>
         <div class="buttons">
           ${button('app.continue()', 'Continue')}
-          ${button('app.playAgain()', 'Play Again')}
+          ${button('app.playAgain()', 'Start new game')}
         </div>
       </div>
     `;
   }
 
-  continue () {}
+  continue () {
+    this.setState({
+      showComputerCard: false,
+      selectedStat: ''
+    });
+  }
 
   playAgain() {
     const shuffledDeck = shuffle(this.state.deck);
@@ -91,7 +98,39 @@ class App {
     this.setState({
       selectedStat
     });
-    this.compareCards(selectedStat);
+
+    // test equality first...if not equal show both cards
+    if (this.state.playerDeck[0][selectedStat] === this.state.computerDeck[0][selectedStat]) {
+      this.setState({
+        currentStatus: statusMessages.equalStat
+      });
+      return;
+    }
+    this.setState({
+      showComputerCard: true
+    });
+
+    //this.compareCards(selectedStat);
+  }
+
+  playerWinsRound() {
+    let newPlayerDeck = [...this.state.playerDeck];
+    let newComputerDeck = [...this.state.computerDeck];
+    newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
+    this.setState({
+      playerDeck: newPlayerDeck,
+      computerDeck: newComputerDeck
+    });
+  }
+
+  computerWinsRound() {
+    let newPlayerDeck = [...this.state.playerDeck];
+    let newComputerDeck = [...this.state.computerDeck];
+    newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
+    this.setState({
+      playerDeck: newPlayerDeck,
+      computerDeck: newComputerDeck
+    });
   }
 
   compareCards(stat) {
@@ -100,13 +139,13 @@ class App {
 
     // TEST EQUALITY
     if (playerStat === computerStat) {
+      this.setState({
+        currentStatus: statusMessages.equalStat
+      });
       return;
     }
 
     // TEST IF STAT IS GREATER OR LOWER
-    let newPlayerDeck = [...this.state.playerDeck];
-    let newComputerDeck = [...this.state.computerDeck];
-
     switch (stat) {
       case 'dependents':
       case 'downloadsLastMonth':
@@ -114,29 +153,15 @@ class App {
       case 'popularity':
       case 'quality':
       case 'releases':
-        if (playerStat > computerStat) {
-          newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
-        } else {
-          newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
-        }
-        this.setState({
-          playerDeck: newPlayerDeck,
-          computerDeck: newComputerDeck
-        });
+        if (playerStat > computerStat) this.playerWinsRound();
+        else this.computerWinsRound();
         break;
 
       case 'dependencies':
       case 'openIssues':
       case 'openPullRequests':
-        if (playerStat < computerStat) {
-          newPlayerDeck.push(newPlayerDeck.shift(), newComputerDeck.shift());
-        } else {
-          newComputerDeck.push(newComputerDeck.shift(), newPlayerDeck.shift());
-        }
-        this.setState({
-          playerDeck: newPlayerDeck,
-          computerDeck: newComputerDeck
-        });
+        if (playerStat < computerStat) this.playerWinsRound();
+        else this.computerWinsRound();
         break;
     }
 
