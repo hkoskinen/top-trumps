@@ -15,8 +15,8 @@ const statusMessages = {
   'equalStat': 'Properties are equal. Select another one!',
   'playerHasBetterStat': 'You have better property! You got computer\'s card.',
   'computerHasBetterStat': 'Computer has better property! Computer got your card.',
-  'playerWins': 'You win!',
-  'computerWins': 'Computer wins!',
+  'playerWins': 'You win! Press "Play Again" to play again.',
+  'computerWins': 'Computer wins! Press "Play Again" to play again.',
 };
 
 class App {
@@ -27,7 +27,7 @@ class App {
       shuffledDeck: [],
       playerDeck: [],
       computerDeck: [],
-      selectedStat: ''
+      currentStatus: statusMessages.start
     };
     this.setState();
     this.componentDidMount();
@@ -62,7 +62,8 @@ class App {
           ${card(this.state.computerDeck[0], false)}
         </div>
         <div class="status">
-          ${p(statusMessages.start)}
+          ${p(this.state.currentStatus)}
+          ${p(`Player cards: ${this.state.playerDeck.length} Computer cards: ${this.state.computerDeck.length}`)}
         </div>
         <div class="buttons">
           ${button('app.continue()', 'Continue')}
@@ -80,7 +81,8 @@ class App {
     this.setState({
       shuffledDeck,
       playerDeck: shuffledDeck.slice(0, shuffledDeck.length / 2),
-      computerDeck: shuffledDeck.slice(shuffledDeck.length / 2)
+      computerDeck: shuffledDeck.slice(shuffledDeck.length / 2),
+      currentStatus: statusMessages.start
     });
   }
 
@@ -139,10 +141,14 @@ class App {
     }
 
     // CHECK IF OTHER PLAYER'S DECK IS EMPTY
-    if (this.state.playerDeck.length === 0) {
-
-    } else if (this.state.computerDeck.length === 0) {
-
+    if (this.state.playerDeck.length === 12) {
+      this.setState({
+        currentStatus: statusMessages.playerWins
+      });
+    } else if (this.state.computerDeck.length === 12) {
+      this.setState({
+        currentStatus: statusMessages.computerWins
+      });
     }
   }
 }
