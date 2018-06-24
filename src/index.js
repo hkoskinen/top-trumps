@@ -10,13 +10,13 @@ import './styles.css';
 const h1 = children => `<h1 class="game__title">${children}</h1>`;
 const p = children => `<p>${children}</p>`;
 
-const messages = {
-  'start': 'Choose property from your card that you think is better',
-  'equalStat': '',
-  'playerHasBetterStat': '',
-  'computerHasBetterStat': '',
-  'playerWins': '',
-  'computerWins': '',
+const statusMessages = {
+  'start': 'Select property from your card!',
+  'equalStat': 'Properties are equal. Select another one!',
+  'playerHasBetterStat': 'You have better property! You got computer\'s card.',
+  'computerHasBetterStat': 'Computer has better property! Computer got your card.',
+  'playerWins': 'You win!',
+  'computerWins': 'Computer wins!',
 };
 
 class App {
@@ -61,9 +61,8 @@ class App {
           ${card(this.state.playerDeck[0])}
           ${card(this.state.computerDeck[0], false)}
         </div>
-
-        <div class="status" onClick="app.playAgain()">
-          ${p('Guess a property from your card and see if it wins computer\'s!')}
+        <div class="status">
+          ${p(statusMessages.start)}
         </div>
         <div class="buttons">
           ${button('app.continue()', 'Continue')}

@@ -125,6 +125,14 @@ body {
   font-weight: bold;
 }
 
+.status {
+  background: #fff;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-radius: 0.2rem;
+  margin-top: 1rem;
+}
+
 /* Animations */
 
 @keyframes rotateTitle {
